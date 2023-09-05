@@ -61,7 +61,7 @@ class TimelinePage extends ConsumerWidget {
               ref.read(fontScaleProvider.notifier).state = 18;
             }
           },
-          child: const CustomTimeline(),
+          child: CustomTimeline(),
         )
     );
   }

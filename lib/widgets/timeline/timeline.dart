@@ -56,10 +56,16 @@ final List<DateTime> eventsTimes = <DateTime>[
   DateTime.parse('2023-09-04 07:12:00.0'),
   DateTime.parse('2023-09-02 04:20:00.0'),
   DateTime.parse('2023-08-31 17:25:00.0'),
+
+  DateTime.parse('2023-09-05 09:02:00.0'),
+  DateTime.parse('2023-09-05 10:39:00.0'),
+  DateTime.parse('2023-09-05 07:12:00.0'),
+  DateTime.parse('2023-09-05 14:17:00.0'),
+  DateTime.parse('2023-09-05 17:25:00.0'),
 ];
 
 class CustomTimeline extends ConsumerWidget {
-  const CustomTimeline({
+  CustomTimeline({
     Key? key,
     this.controller,
     this.lineColor = DarkTheme.accent,
@@ -78,7 +84,7 @@ class CustomTimeline extends ConsumerWidget {
   final Color indicatorColor;
   final PaintingStyle indicatorStyle;
   final StrokeCap strokeCap;
-  final double strokeWidth;
+  double strokeWidth;
   final PaintingStyle style;
 
   @override
@@ -90,6 +96,11 @@ class CustomTimeline extends ConsumerWidget {
     final nowReal = ref.watch(dayTimeNowProvider);
     final scale = ref.watch(scaleTimelimeProvider);
     final fontScale = ref.watch(fontScaleProvider);
+    print(strokeWidth);
+    strokeWidth = scale.w;
+    if(scale > 2) strokeWidth = 2.w;
+    print(strokeWidth);
+    print('--------------');
     DateTime now = nowReal;
     if(now.minute > 30) {
       now = now.subtract(Duration(minutes: (now.minute - 30)));
@@ -125,14 +136,19 @@ class CustomTimeline extends ConsumerWidget {
             final isLast = index == itemCount - 1;
 
             late DateTime time;
+            final DateTime time2 = now.subtract(Duration(minutes: 30 * index));
 
             if(isFirst) {
               time = nowReal.subtract(Duration(minutes: 30 * index));
             } else {
               time = now.subtract(Duration(minutes: 30 * (index - 1)));
             }
-
             DateTime timeLast = time.subtract(const Duration(minutes: 30));
+
+            print('time: $time');
+            //print('height: $height');
+            print('time2: $time2');
+            print('==================================');
 
             List<int> arr = [];
             String strDates = '';
@@ -291,11 +307,10 @@ class _TimelinePainter extends CustomPainter {
     );
 
     ///Draw all horizontal strokes
-    // print(time);
-    // print('height: $height');
-    //
-    // print(timeLast);
-    // print('==================================');
+    print('time: $time');
+    //print('height: $height');
+    print('timeLast: $timeLast');
+    print('==================================');
 
     final _hr1 = time.split(':').first;
     final _mn1 = time.split(':').last;
