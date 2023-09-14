@@ -1,4 +1,4 @@
-import 'package:canvas_test_project/widgets/scale.dart';
+import 'package:canvas_test_project/widgets/scale_rotate/scale.dart';
 import 'package:canvas_test_project/widgets/timeline/timeline_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -116,6 +116,7 @@ class MainPage extends ConsumerWidget {
             onPressed: () {
               ref.invalidate(dayTimeNowProvider);
               ref.invalidate(itemCountProvider);
+              ref.invalidate(scrollOffsetProvider);
               Navigator.push(
                 context,
                 MaterialPageRoute(
